@@ -3,9 +3,9 @@ const app = express();
 
 app.get('/', (req, res) => {
   var validacion = req.query.name; 
-  if (!validacion || validacion.length === 0) {
+  if (!validacion  || validacion.length === 0) {
       validacion = "desconocido!"
-  }else{
+  }
     res.send("<h1> Hola " + validacion +"!</h1>")
   }
 });
