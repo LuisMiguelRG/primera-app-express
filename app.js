@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.get('/', (req, res) => {
+app.get('/?nombre=Juan', (req, res) => {
   var validacion = req.query.name; 
   if (!validacion) {
        validacion = "desconocido"
