@@ -4,7 +4,7 @@ const app = express();
 app.get('/', (req, res) => {
   var validacion = req.query.name; 
   if (!validacion) {
-       validacion = "desconocido!"
+       validacion = "desconocido"
   }
     res.send("<h1> Hola " + validacion +"!</h1>");
 });
