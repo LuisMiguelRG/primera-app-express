@@ -4,6 +4,6 @@ const app = express();
 app.get('/makers/juan', (req, res) => {
   var validacion = req.params.nombre; 
   validacion = validacion.replace(/^\w/, c => c.toUpperCase());
-    console.log(res.send("<h1>Hola " + validacion +"!</h1>"));
+    res.send("<h1>Hola " + validacion +"!</h1>");
 });
 app.listen(3000, () => console.log('Listening on port 3000!'));
