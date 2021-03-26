@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.get('/makers/juan', (req, res) => {
+app.get('/makers/', (req, res) => {
   var validacion = req.params.nombre; 
   validacion = validacion.replace(/^\w/, c => c.toUpperCase());
     res.send("<h1>Hola " + validacion +"!</h1>");
