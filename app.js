@@ -10,6 +10,6 @@ app.get('/', (req, res) => {
   for (let i = 0; i <=50; i++) {
      texts.push( i + 'Soy' + (i % 2 == 0) ? "Par" : "Impar!" )    
   }
-  res.render("index" + (texts=texts));
+  res.render("index", (texts=texts));
 });
 app.listen(3000, () => console.log('Listening on port 3000!'));
