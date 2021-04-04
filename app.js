@@ -8,7 +8,7 @@ app.set('views', 'views');
 app.get('/', (req, res) => {
   const texts = [];
   for (let i = 0; i <=50; i++) {
-     texts.push( i + "Soy" + (i % 2 == 0) ? "Par!" : "Impar!" )    
+     texts.push(`${i} Soy ${(i % 2 == 0 ? "Par" : "Impar")}!`)    
   }
   res.render("index", (texts=texts));
 });
