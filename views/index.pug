@@ -2,5 +2,6 @@ html
     head    
         title Esto es una Prueba 
     body 
-    each text in texts
-        p= text
+    form(action="/", method="post")
+        input(type="text", name="name")
+        button Enviar
