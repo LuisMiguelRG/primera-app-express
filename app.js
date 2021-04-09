@@ -40,6 +40,8 @@ app.get('/', (req, res) => {
  res.render("index", {texts:texts});
 }); */
 
+//EJERICICIO SALUDAME-3
+/*
 app.use(express.urlencoded());
 app.set('view engine', 'pug');
 app.set('views', 'views');
@@ -50,6 +52,14 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   res.send('<h1>Hola '+ req.body.name + '!</h1>');
-}); 
+}); */
+
+//EJERCICIO ENCABEZADOS
+
+
+app.get("/", (req, res) => {
+  res.send(req.get('User-Agent'));
+});
+
 
 app.listen(3000, () => console.log('Listening on port 3000!'));
