@@ -57,43 +57,60 @@ app.post("/", (req, res) => {
 
 //EJERCICIO ENCABEZADOS
 
-//definimos la conexion la bd
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/mongo-1', { useNewUrlParser: true });
-//mongoose.connect('mongodb://localhost:27017/Prueba', { useNewUrlParser: true });
-//mongoose.connection.on("error", function(e) { console.error(e); });
-//definimos el schema 
-const Visitorschema = new mongoose.Schema({
-  name: { type: String },
-  date: {type: Date, default: Date.now}
-  //published: { type: Boolean, default: false }
-});
-// definimos el modelo
-const Visitor = mongoose.model("Visitor", Visitorschema);
-
-app.get("/", async (req, res) => {
-    const visitor = new Visitor({ name: req.query.nombre || 'Anomimo'});
-    await visitor.save()
-
-  res.send("<h1>El visitante fue almacenado con éxito.</h1>");
-});
+/**
+app.get("/", (req, res) => {
+  res.send(req.get('User-Agent'));
+}); */
 
 
 //EJERCICIO VISITANTES 
-  
-/*mongoose.connect(process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb', { useNewUrlParser: true });
-
+/**  
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/compressors=disabled&gssapiServiceName=mongodb', { useNewUrlParser: true });
 const VisitorSchema = new mongoose.Schema({
   name: { type: String },
   date: { type: Date, default: Date.now }
 });
 const Visitor = mongoose.model("Visitor", VisitorSchema);
-
 app.get("/", async (req, res) => {
   const visitor = new Visitor({ name: req.query.name || "Anónimo" });
   await visitor.save()
 
   res.send("<h1>El visitante fue almacenado con éxito.</h1>")
 });
-*/
+ */
+
+//EJERCICIO VISITANTES RECURRENTES
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/compressors=disabled&gssapiServiceName=mongodb', { useNewUrlParser: true });
+const VisitorSchema = new mongoose.Schema({
+  name: { type: String },
+  count: { type: Number, default: 0 }
+});
+app.set('view engine', 'pug');
+app.set('views', 'views');
+
+const Visitor = mongoose.model("Visitor", VisitorSchema);
+app.get("/", async (req, res) =>{
+  const name = "pedro"; //req.query.name;
+  
+  let visitor;
+  if (!name || name.trim().length === 0) {
+    visitor = new Visitor({name: "Anonimo", count: 1}); 
+  } else {
+    visitor = await Visitor.findOne({name: name});
+    console.log("Visitor: ", visitor);
+    if (!visitor) {
+      visitor = new Visitor({name: name, count: 1}); 
+    } else {
+      visitor.count += 1;
+    }
+  }
+  await visitor.save();
+
+  const visitors = await Visitor.find();
+  res.render("index",{ visitors: visitors})
+  res.send("<h1>El visitante fue almacenado con éxito.</h1>")
+
+});
+
 
 app.listen(3000, () => console.log('Listening on port 3000!'));

@@ -1,7 +1,17 @@
-html 
-    head    
-        title Esto es una Prueba 
-    body 
-    form(action="/", method="post")
-        input(type="text", name="name")
-        button(type="submit") Enviar
+  
+html
+  head
+    title Visitantes recurrentes
+  body
+    table
+      thead
+        tr
+          th Id
+          th Name
+          th Visits
+      tbody
+        each visitor in visitors
+          tr
+            td= visitor._id
+            td= visitor.name
+            td= visitor.count
