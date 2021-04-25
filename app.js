@@ -90,7 +90,7 @@ app.set('views', 'views');
 
 const Visitor = mongoose.model("Visitor", VisitorSchema);
 app.get("/", async (req, res) =>{
-  const name = "pedro"; //req.query.name;
+  const name = req.query.name; /*"pedro";*/ 
   
   let visitor;
   if (!name || name.trim().length === 0) {
