@@ -1,4 +1,5 @@
 const express = require('express');
+var mongoose = require("mongoose");
 const app = express();
 
 //MI PRIMERA APLICACION 
@@ -56,10 +57,42 @@ app.post("/", (req, res) => {
 
 //EJERCICIO ENCABEZADOS
 
+//definimos la conexion la bd
+mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost:27017/mongo-1', { useNewUrlParser: true });
+//mongoose.connect('mongodb://localhost:27017/Prueba', { useNewUrlParser: true });
+mongoose.connection.on("error", function(e) { console.error(e); });
+//definimos el schema 
+const Visitorschema = new mongoose.Schema({
+  title: String,
+  date: {type: Date, default: Date.now}
+  //published: { type: Boolean, default: false }
+});
+// definimos el modelo
+const Visitor = mongoose.model("Visitor", Visitorschema);
 
-app.get("/", (req, res) => {
-  res.send(req.get('User-Agent'));
+app.get("/", async (req, res) => {
+    const visitor = new Visitor({ name: req.query.nombre || 'Anomimo'});
+    await visitor.save()
+  res.send("<h1>El visitante fue almacenado con éxito.</h1>");
 });
 
+
+//EJERCICIO VISITANTES 
+  
+/*mongoose.connect(process.env.MONGODB_URL || 'mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb', { useNewUrlParser: true });
+
+const VisitorSchema = new mongoose.Schema({
+  name: { type: String },
+  date: { type: Date, default: Date.now }
+});
+const Visitor = mongoose.model("Visitor", VisitorSchema);
+
+app.get("/", async (req, res) => {
+  const visitor = new Visitor({ name: req.query.name || "Anónimo" });
+  await visitor.save()
+
+  res.send("<h1>El visitante fue almacenado con éxito.</h1>")
+});
+*/
 
 app.listen(3000, () => console.log('Listening on port 3000!'));
