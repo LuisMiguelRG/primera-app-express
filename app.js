@@ -90,14 +90,14 @@ app.set('views', 'views');
 
 const Visitor = mongoose.model("Visitor", VisitorSchema);
 app.get("/", async (req, res) =>{
-  const name = req.query.name; /*"pedro";*/ 
+  const name = req.query.name;  
   
   let visitor;
   if (!name || name.trim().length === 0) {
     visitor = new Visitor({name: "Anonimo", count: 1}); 
   } else {
     visitor = await Visitor.findOne({name: name});
-    console.log("Visitor: ", visitor);
+              "Visitor: ", visitor;
     if (!visitor) {
       visitor = new Visitor({name: name, count: 1}); 
     } else {
@@ -108,7 +108,7 @@ app.get("/", async (req, res) =>{
 
   const visitors = await Visitor.find();
   res.render("index",{ visitors: visitors})
-  res.send("<h1>El visitante fue almacenado con éxito.</h1>")
+  ("<h1>El visitante fue almacenado con éxito.</h1>")
 
 });
 
